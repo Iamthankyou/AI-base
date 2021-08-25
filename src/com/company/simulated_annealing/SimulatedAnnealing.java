@@ -27,10 +27,19 @@ public class SimulatedAnnealing {
 			// calculate the energy values
 			double currentEnergy = getEnergy(currentCoordinateX);
 			double newEnergy = getEnergy(nextCoordinateX);
-			
-			if(acceptanceProbability(currentEnergy, newEnergy, temp) > Math.random())
+
+
+			double g = acceptanceProbability(currentEnergy, newEnergy, temp);
+			double r = Math.random();
+
+			if(g > r){
 				currentCoordinateX = nextCoordinateX;
-				
+				System.out.println("U: " + currentEnergy + ", V: " + newEnergy + ", T: " + temp + "g(u,v,t) = " + g + " > r=" + r + " Accept v" );
+			}
+			else{
+				System.out.println("U: " + currentEnergy + ", V: " + newEnergy + ", T: " + temp + "g(u,v,t) = " + g + " <= r=" + r + " Denied v" );
+			}
+
 			if(f(currentCoordinateX) > f(bestCoordinateX))
 				bestCoordinateX = currentCoordinateX;
 			
