@@ -136,8 +136,9 @@ public class TrieuPhu_KeCuop_DFS {
 
     }
 
+    private int countLoop = 0;
     private boolean dfs(Node x, Node preX) {
-
+        countLoop++;
         if (x.getKeCuop() == 0 && x.getTrieuPhu() == 0 && x.getBo() == 0){
             System.out.println(x.getTrieuPhu() + " " + x.getKeCuop() + " " + x.getBo());
 
@@ -147,6 +148,7 @@ public class TrieuPhu_KeCuop_DFS {
 //                xx = pre[xx.getTrieuPhu()][xx.getKeCuop()][xx.Bo];
 //            }
 
+            System.out.println("Countloop = " + countLoop);
             return true;
         }
 
@@ -234,7 +236,6 @@ public class TrieuPhu_KeCuop_DFS {
 //        }
         return false;
     }
-
 
     public static void main(String args[]){
         TrieuPhu_KeCuop_DFS solve = new TrieuPhu_KeCuop_DFS();
