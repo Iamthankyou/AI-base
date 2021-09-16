@@ -1,5 +1,8 @@
 package com.company.hillclimping.problem;
 
+import com.company.graph.problem.TrieuPhu_KeCuop_Practice_Solution_BestFirstSearch;
+
+import javax.sound.midi.SysexMessage;
 import java.util.*;
 
 public class TrieuPhu_KeCuop_hillcimping_iddfs {
@@ -54,11 +57,9 @@ public class TrieuPhu_KeCuop_hillcimping_iddfs {
 
         @Override
         public String toString() {
-            return "Node{" +
-                    "TrieuPhu=" + TrieuPhu +
-                    ", KeCuop=" + KeCuop +
-                    ", Bo=" + Bo +
-                    '}';
+            return "(" +
+                    TrieuPhu + " "+  KeCuop +" "+ Bo +
+                    ')';
         }
     }
 
@@ -103,7 +104,9 @@ public class TrieuPhu_KeCuop_hillcimping_iddfs {
         while( !stack.isEmpty() ){
             countLoop++;
             Node actualVertex = stack.pop();
-            System.out.println(actualVertex.getTrieuPhu()+ " " + actualVertex.getKeCuop() + " " + actualVertex.getBo());
+//            System.out.println(actualVertex.getTrieuPhu()+ " " + actualVertex.getKeCuop() + " " + actualVertex.getBo());
+            System.out.println("Node u: (" + actualVertex.getTrieuPhu()+ " " + actualVertex.getKeCuop() + " " + actualVertex.getBo()+")"+"{"+actualVertex.getH()+"}");
+            System.out.println("Trang thai ke v: ");
 
             if (actualVertex.getTrieuPhu() == 0 && actualVertex.getKeCuop() == 0 && actualVertex.Bo == 0){
                 System.out.println("Solve");
@@ -149,33 +152,41 @@ public class TrieuPhu_KeCuop_hillcimping_iddfs {
                 visited[x.getTrieuPhu()][x.getKeCuop()][x.Bo] = 1;
             }
 
-
-
             if (x.getBo() == 1){
+                Node print = new Node(x.getTrieuPhu()-1, x.getKeCuop(),1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()-1, x.getKeCuop(),1-x.getBo()),x) && visited[x.getTrieuPhu()-1][x.getKeCuop()][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()-1][x.getKeCuop()][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()-1, x.getKeCuop(),1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu()-2, x.getKeCuop(),1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()-2, x.getKeCuop(),1-x.getBo()),x) && visited[x.getTrieuPhu()-2][x.getKeCuop()][1-x.Bo]==0){
 //                    visited[x.getTrieuPhu()-1][x.getKeCuop()][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()-2, x.getKeCuop(),1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu(), x.getKeCuop()-1,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu(), x.getKeCuop()-1,1-x.getBo()),x) && visited[x.getTrieuPhu()][x.getKeCuop()-1][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()][x.getKeCuop()-1][1-x.Bo]=1;
                     Node a = new Node(x.getTrieuPhu(), x.getKeCuop()-1,1-x.getBo());
                     priorityNearActual.add(a);
                     pre.put(a,x);
                 }
+                print = new Node(x.getTrieuPhu(), x.getKeCuop()-2,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu(), x.getKeCuop()-2,1-x.getBo()),x) && visited[x.getTrieuPhu()][x.getKeCuop()-2][1-x.Bo]==0){
 //                    visited[x.getTrieuPhu()][x.getKeCuop()-2][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu(), x.getKeCuop()-2,1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu()-1, x.getKeCuop()-1,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()-1, x.getKeCuop()-1,1-x.getBo()),x) && visited[x.getTrieuPhu()-1][x.getKeCuop()-1][1-x.Bo] ==0){
 //                    visited[x.getTrieuPhu()][x.getKeCuop()-1][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()-1, x.getKeCuop()-1,1-x.getBo());
@@ -184,30 +195,40 @@ public class TrieuPhu_KeCuop_hillcimping_iddfs {
                 }
             }
             else{
+                Node print = new Node(x.getTrieuPhu()+1, x.getKeCuop(),1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()+1, x.getKeCuop(),1-x.getBo()),x) && visited[x.getTrieuPhu()+1][x.getKeCuop()][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()+1][x.getKeCuop()][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()+1, x.getKeCuop(),1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu()+2, x.getKeCuop(),1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()+2, x.getKeCuop(),1-x.getBo()),x) && visited[x.getTrieuPhu()+2][x.getKeCuop()][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()+2][x.getKeCuop()][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()+2, x.getKeCuop(),1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu(), x.getKeCuop()+1,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu(), x.getKeCuop()+1,1-x.getBo()),x) && visited[x.getTrieuPhu()][x.getKeCuop()+1][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()][x.getKeCuop()+1][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu(), x.getKeCuop()+1,1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu(), x.getKeCuop()+2,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu(), x.getKeCuop()+2,1-x.getBo()),x) && visited[x.getTrieuPhu()][x.getKeCuop()+2][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()][x.getKeCuop()+2][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu(), x.getKeCuop()+2,1-x.getBo());
                     pre.put(a,x);
                     priorityNearActual.add(a);
                 }
+                print = new Node(x.getTrieuPhu()+1, x.getKeCuop()+1,1-x.getBo());
+                System.out.print(print+"{"+print.getH()+"} - ");
                 if (isFeasible(new Node(x.getTrieuPhu()+1, x.getKeCuop()+1,1-x.getBo()),x) && visited[x.getTrieuPhu()+1][x.getKeCuop()+1][1-x.Bo] == 0){
 //                    visited[x.getTrieuPhu()+1][x.getKeCuop()+1][1-x.Bo] = 1;
                     Node a = new Node(x.getTrieuPhu()+1, x.getKeCuop()+1,1-x.getBo());
@@ -216,14 +237,32 @@ public class TrieuPhu_KeCuop_hillcimping_iddfs {
                 }
             }
 
-
+            System.out.println();
             System.out.print("Heuristic value: ");
             while (!priorityNearActual.isEmpty()){
                 System.out.print(priorityNearActual.peek().getH()+" ");
                 stack.push(priorityNearActual.poll());
             }
             System.out.println();
-
+            System.out.println("Danh sach L: ");
+            Stack<Node> tmp = (Stack)stack.clone();
+            while (!tmp.isEmpty()){
+                Node i = tmp.pop();
+                System.out.print(i+"{"+i.getH()+"}"+" ");
+            }
+            System.out.println();
+            System.out.println("Hang doi Q: ");
+            for (int i=0; i<=3; i++){
+                for (int j=0; j<=3; j++){
+                    for (int k=0; k<=3; k++){
+                        if (visited[i][j][k]!=0){
+                            System.out.print("("+i+","+j+","+k+")");
+                        }
+                    }
+                }
+            }
+            System.out.println();
+            System.out.println();
         }
     }
 
