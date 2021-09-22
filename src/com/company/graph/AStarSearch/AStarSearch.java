@@ -1,5 +1,7 @@
 package com.company.graph.AStarSearch;
 
+import com.company.graph.problem.TrieuPhu_KeCuop_Practice_Solution_BestFirstSearch;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -56,9 +58,22 @@ public class AStarSearch {
                     	queue.remove(child);
                     
                     queue.add(child);
+					System.out.println("Root:"+current + " current:" +child+ " k(u,v)=" + cost + " h(v)=" + heuristic(child, destination) + " g(v)=" + tempG + "f(v)=" + tempF );
 				}
-			}			
-		}	
+			}
+
+			PriorityQueue<Node> tmp = new PriorityQueue(new NodeComparator());
+			for (Node i:queue){
+				tmp.add(i);
+			}
+			System.out.print("Queue: ");
+			while (!tmp.isEmpty()){
+				Node i = tmp.remove();
+				System.out.print(i+"{"+i.getF()+"}"+" ");
+			}
+			System.out.println();
+
+		}
 	}
 
 	private double heuristic(Node node1, Node node2) {
