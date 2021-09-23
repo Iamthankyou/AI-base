@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class TrieuPhu_KeCuop_Practice_Solution_BFS {
+
+    // Class trang thai, vi du: (3,3,1)
     public class Node{
         private int TrieuPhu;
         private int KeCuop;
@@ -49,9 +51,8 @@ public class TrieuPhu_KeCuop_Practice_Solution_BFS {
 
 
     public void bfs(){
+        // Trang thai da tham (1), chua tham(0)
         int[][][] visited= new int[4][4][4];
-
-        Queue<Node> queue = new LinkedList<>();
         for (int i=0; i<4; i++){
             for (int j=0; j<4;j++){
                 for (int k=0; k<4; k++){
@@ -59,6 +60,9 @@ public class TrieuPhu_KeCuop_Practice_Solution_BFS {
                 }
             }
         }
+
+        Queue<Node> queue = new LinkedList<>();
+
 
         Node root = new Node(3,3,1);
         visited[3][3][1] = 1;
@@ -78,12 +82,6 @@ public class TrieuPhu_KeCuop_Practice_Solution_BFS {
             Node x = actualVertex;
             visited[x.getTrieuPhu()][x.getKeCuop()][x.Bo] = 1;
 
-//            if (visited[x.getTrieuPhu()][x.getKeCuop()][x.Bo] == 1){
-//                continue;
-//            }
-//            else{
-//                visited[x.getTrieuPhu()][x.getKeCuop()][x.Bo] = 1;
-//            }
             if (x.getBo() == 1){
                 Node print = new Node(x.getTrieuPhu()-1, x.getKeCuop(),1-x.getBo());
                 System.out.print(print +"<->");
@@ -160,7 +158,6 @@ public class TrieuPhu_KeCuop_Practice_Solution_BFS {
     }
 
     private boolean isFeasible(Node x, Node preX) {
-
         if (x.getTrieuPhu() == 0 && x.getKeCuop() == 0 && x.getBo() == 0){
             return true;
         }
