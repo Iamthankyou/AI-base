@@ -17,6 +17,16 @@ public class Move {
         this.move = move;
     }
 
+    private int minimaxValue;
+
+    public int getMinimaxValue() {
+        return minimaxValue;
+    }
+
+    public void setMinimaxValue(int minimaxValue) {
+        this.minimaxValue = minimaxValue;
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();

@@ -31,6 +31,32 @@ public class Dodgem {
         moves.pop();
     }
 
+//    public boolean isLegalMove(){
+//
+//    }
+
+    public int isEndGame(){
+        int cWhite=0,cBlack=0;
+        for (int i=0; i<3; i++){
+            for (int j=0; j<3; j++){
+                if (moves.peek().getMove()[i][j]==-1){
+                    cBlack++;
+                }
+                if (moves.peek().getMove()[i][j]==1){
+                    cWhite++;
+                }
+            }
+        }
+
+        if (cWhite==0){
+            return 1;
+        }
+        if (cBlack==0){
+            return -1;
+        }
+        return 0;
+    }
+
     public Move getBoard(){
         return moves.peek();
     }
@@ -38,11 +64,23 @@ public class Dodgem {
     public List<Move> legalMove(){
         List<Move> legalMoves = new LinkedList<>();
 
+        if (isEndGame()!=0){
+            return null;
+        }
+
         if (isSide == 1){
             for (int i=0; i<3; i++){
                 for (int j=0; j<3; j++){
                     int[][] curr = moves.peek().getMove();
                     if (curr[i][j] == 1){
+                        if (i==0){
+                            int[][] newMove = curr.clone();
+                            for (int x=0; x<newMove.length; x++){
+                                newMove[x] = newMove[x].clone();
+                            }
+                            newMove[i][j] = 0;
+                            legalMoves.add(new Move(newMove));
+                        }
                         if (i-1>=0 && curr[i-1][j]==0){
                             int[][] newMove = curr.clone();
                             for (int x=0; x<newMove.length; x++){
@@ -81,6 +119,14 @@ public class Dodgem {
                 for (int j=0; j<3; j++){
                     int[][] curr = moves.peek().getMove();
                     if (curr[i][j] == -1){
+                        if (j==2){
+                            int[][] newMove = curr.clone();
+                            for (int x=0; x<newMove.length; x++){
+                                newMove[x] = newMove[x].clone();
+                            }
+                            newMove[i][j] = 0;
+                            legalMoves.add(new Move(newMove));
+                        }
                         if (i-1>=0 && curr[i-1][j]==0){
                             int[][] newMove = curr.clone();
                             for (int x=0; x<newMove.length; x++){
@@ -101,7 +147,7 @@ public class Dodgem {
                             legalMoves.add(new Move(newMove));
                         }
 
-                        if (j+1>=0 && curr[i][j+1]==0){
+                        if (j+1<3 && curr[i][j+1]==0){
                             int[][] newMove = curr.clone();
                             for (int x=0; x<newMove.length; x++){
                                 newMove[x] = newMove[x].clone();
