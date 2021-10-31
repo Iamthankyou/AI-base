@@ -1,12 +1,12 @@
-package com.company.Minimax.Practice;
+package com.company.Minimax.Practice.Chess;
 
 import com.github.bhlangonijr.chesslib.Board;
-import com.github.bhlangonijr.chesslib.Piece;
-import com.github.bhlangonijr.chesslib.Square;
 import com.github.bhlangonijr.chesslib.move.Move;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Chess_Minimax_Alpha_Beta {
     private final int DEPTH = 3;
@@ -15,6 +15,7 @@ public class Chess_Minimax_Alpha_Beta {
 
     private Board board;
     private Move bestMove;
+    private Map<Move,Integer> rootValues;
 
     public Chess_Minimax_Alpha_Beta(Board board) {
         this.board = board;
@@ -66,7 +67,15 @@ public class Chess_Minimax_Alpha_Beta {
 
     public Move getBestMove(int player){
         bestMove = null;
+        rootValues = new HashMap<>();
         int val = minimax(0,player,Integer.MIN_VALUE,Integer.MAX_VALUE);
+
+        for (var node:rootValues.entrySet()){
+            if (node.getValue() == val){
+                bestMove = node.getKey();
+            }
+        }
+
         System.out.println(val);
         return bestMove;
     }
@@ -84,9 +93,13 @@ public class Chess_Minimax_Alpha_Beta {
                 board.doMove(move);
 //                System.out.println(board.toString());
                 int val = minimax(depth + 1, MIN_PLAYER, alpha, beta);
+
+                if (depth==0){
+                    rootValues.put(move,val);
+                }
+
                 board.undoMove();
                 best = Math.max(best, val);
-                bestMove = move;
                 alpha = Math.max(alpha, best);
 
                 if (alpha > beta)
@@ -113,7 +126,7 @@ public class Chess_Minimax_Alpha_Beta {
 
     public static void main(String args[]) {
         Board board = new Board();
-        board.loadFromFen("rnbqkbnr/pp2pppp/3p4/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq d3 0 3")   ;
+        board.loadFromFen("rnb4r/ppppkpp1/4pn2/b5Np/3P4/2P1BNP1/PP3P1P/R2QKB1R w KQ h6 0 10")   ;
         Chess_Minimax_Alpha_Beta minimax = new Chess_Minimax_Alpha_Beta(board);
         Move move = minimax.getBestMove(1);
         System.out.println(move);
