@@ -13,23 +13,24 @@ class Individual:
             self.genes[i] = random.randint(0,1)
     
     def f(self,x):
-        # print(str(x) + ":",end="")
-        # print((x-2)*(x-2))
-        return (x-3)*(x-3)
+        return Constants.EQUATION(x)
     
     def genesToDouble(self):
         base = 1
         geneInDouble = 0
+        largest = 2**Constants.GENE_LENGTH
 
         for i in range(0,Constants.GENE_LENGTH):
             if self.genes[i] == 1:
                 geneInDouble += base
             base = base * 2
+
+        value = Constants.RANGE[0] + (geneInDouble/largest) * (Constants.RANGE[1] - Constants.RANGE[0])
+
         
         # 2^10=1024 / 1024 -> [0,10]
-        geneInDouble = geneInDouble / 102.4
-        # print(geneInDouble)
-        return geneInDouble
+        # geneInDouble = geneInDouble / 102.4
+        return value
     
     def getFitness(self):
         geneInDouble = self.genesToDouble()
